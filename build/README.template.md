@@ -26,7 +26,6 @@ Dynamic blocks: {{::command:...::}} resolved at generation time
 - [Importing](#importing)
 {{::readme-content:toc::}}
 - [Version Access](#version-access)
-- [Example files and test files](#example-files-and-test-files)
 - [License](#license)
 - [Author](#author)
 
