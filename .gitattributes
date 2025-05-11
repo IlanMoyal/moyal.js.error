@@ -1,0 +1,12 @@
+*.js              text eol=lf
+*.mjs             text eol=lf
+*.ts              text eol=lf
+*.json            text eol=lf
+*.jsonc           text eol=lf
+*.sh              text eol=lf
+*.md              text eol=lf
+*.yml             text eol=lf
+*.yaml            text eol=lf
+
+# Ensure Windows doesn't mess with package-lock
+package-lock.json text eol=lf

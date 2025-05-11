@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>MoyalError.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="MoyalError.html">MoyalError</a><ul class='methods'><li data-type='method'><a href="MoyalError.html#toJSON">toJSON</a></li><li data-type='method'><a href="MoyalError.html#toString">toString</a></li><li data-type='method'><a href="MoyalError.html#.extendNativeError">extendNativeError</a></li><li data-type='method'><a href="MoyalError.html#.printCauseChain">printCauseChain</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#MoyalError.">MoyalError.</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">MoyalError.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*!
+ * File: src/MoyalError.js
+ */
+
+const TAB_STR = "  ";
+
+import BuildInfo from "./auto-generated/build-info.js";
+
+/**
+ * @typedef {object} MoyalErrorJSON
+ * @property {string} name - The name of the error (usually the class name).
+ * @property {string} message - The error message.
+ * @property {string} timestamp - ISO 8601 timestamp of when the error was created.
+ * @property {string | undefined} stack - The error's stack trace.
+ * @property {MoyalErrorJSON | object | string | null} [cause] - The nested cause (recursively serialized if available).
+ * @property {string} type - The actual class name (e.g., "MoyalError").
+ */
+
+/**
+ * Custom error class with nested error support.
+ * Automatically uses native `cause` if supported, otherwise simulates it.
+ */
+export class MoyalError extends Error {
+	/**
+	 * Returns the version of this library.
+	 * 
+	 * @returns {string} - The version of this library.
+	 */
+	static get version() { 
+		return BuildInfo.version;
+	}
+
+    /**
+     * @readonly 
+     * @type {boolean} 
+     */
+	static #_supportsNativeCause = MoyalError.#_testCauseSupport();
+
+    /**
+	 * Tests if the current runtime supports native Error `cause` (ES2022).
+	 * @returns {boolean}
+	 */
+	static #_testCauseSupport() {
+		try {
+			const test = new Error("test", { cause: new Error("inner") });
+			return 'cause' in test;
+		} catch {
+			return false;
+		}
+	}
+
+	/** @type {Error | undefined} */
+	#_cause = undefined;
+
+    /**@type {Date} */
+    #_timestamp = new Date();
+
+    /**
+	 * Constructs a new MoyalError instance.
+	 *
+	 * @param {string} message - The error message.
+	 * @param {object|Error|string|null} [second] - Either an object with `{ cause }`, or a direct cause/error.
+	 */
+	constructor(message = "No message description was set to this error.", second = null) {
+		// Handle options object with { cause } explicitly
+        const isOptionsObject = second &amp;&amp; typeof second === 'object' &amp;&amp; 'cause' in second;
+        const cause = isOptionsObject ? second.cause : second;
+        const restOptions = MoyalError.#_supportsNativeCause ? { cause } : undefined;
+		
+		// Call parent with cause if supported
+		super(String(message), restOptions);
+
+		this.name = new.target.name; // &lt;- ensures 'MoyalError' instead of 'Error'
+
+		// Fallback storage for cause
+		if (!MoyalError.#_supportsNativeCause &amp;&amp; cause instanceof Error) {
+			this.#_cause = cause;
+		}
+	}
+
+    /**
+	 * Gets the cause of the error (native or simulated).
+	 * @returns {Error | undefined}
+	 */
+	get cause() {
+		return MoyalError.#_supportsNativeCause
+			? super.cause
+			: this.#_cause;
+	}
+
+    /**
+	 * Returns a string representation of the error including chained causes.
+	 * @returns {string}
+	 */
+	toString() {
+		let s = this.#_toStringNonRecursive();
+		const cause = this.cause;
+		if (cause) {
+			s += `\nCaused by...\n` + MoyalError.#_tabify(cause.toString());
+		}
+		return s;
+	}
+
+    /**
+	 * Returns the error string without recursing into causes.
+	 * @returns {string}
+	 */
+	#_toStringNonRecursive() {
+		let s = this.name;
+		if (this.message) s += `: ${this.message}`;
+		if (this.stack) s += `\n${MoyalError.#_tabify(this.stack)}`;
+		return s;
+	}
+    
+    /**
+     * Indents all lines with a tab.
+     * @param {string} str
+     * @returns {string}
+     */
+    static #_tabify(str) {
+        return String(str).replace(/\n/g, `\n${TAB_STR}`);
+    }
+
+    /**
+	 * Serializes the error into a JSON-friendly object, including metadata for structured logging.
+	 *
+	 * @returns {MoyalErrorJSON} A plain object with name, message, stack, timestamp, and cause.
+	 */
+	toJSON() {
+		const cause = this.cause;
+		return {
+			name: this.name,
+			type: this.constructor.name,
+			timestamp: this.#_timestamp.toISOString(),
+			message: this.message,
+			stack: this.stack,
+			cause: cause instanceof Error &amp;&amp; typeof cause.toJSON === 'function'
+				? cause.toJSON()
+				: cause ?? null
+		};
+	}
+
+    /**
+     * Builds a full stack trace including all nested causes, recursively.
+     *
+     * @returns {string} A combined stack trace with each cause appended.
+     */
+    get fullStack() {
+        let output = this.stack || "";
+        let current = this.cause;
+        while (current) {
+            output += `\nCaused by: ${current.stack || current.message}`;
+            current = current.cause;
+        }
+        return output;
+    }
+
+    /**
+     * Builds a readable, indented summary of the cause chain.
+     *
+     * @param {Error} error - The error to trace.
+     * @returns {string} A multiline string with each cause indented by depth.
+     */
+    static printCauseChain(error) {
+        let lines = [];
+        let depth = 0;
+        while (error) {
+            lines.push(`${TAB_STR.repeat(depth)}${error.name ?? 'Error'}: ${error.message ?? '(no message)'}`);
+            error = error.cause;
+            depth++;
+        }
+        return lines.join('\n');
+    }
+
+	/**
+	 * Extends the native Javascript Error type to contain toJSON function.
+	 */
+	static extendNativeError() {
+		if (!Error.prototype.toJSON) {
+			Error.prototype.toJSON = function () {
+				return {
+					name: this.name,
+					type: this.constructor.name,
+					message: this.message,
+					stack: this.stack,
+					...(this.cause &amp;&amp; { cause: this.cause })
+				};
+			};
+		}
+	}
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer></footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

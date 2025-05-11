@@ -1,0 +1,41 @@
+/*
+ * Edit this file to set all project settings.
+ */{
+    "project:fullname": "moyal.js.error", // TODO: replace `lib_name` with library name
+    "scope": "@moyal",
+    "lib": "js-error", // TODO: replace `lib_name` with library name
+    "version": "1.0.0",
+    "description": "A modern, extensible JavaScript error class with native cause support, recursive serialization, full stack tracing, and developer-friendly utilities. Designed for structured logging and forward-compatible error handling in modern applications.",
+    "author": "Ilan Moyal",
+    "author:website": "https://www.moyal.es",
+    "author:twitter:username": "i_moyal",
+    "author:linkedin:username": "ilanam",
+    "license": "MIT",
+    "license:short-text": "MIT License - free to use, modify, and distribute.",
+    "sourceFolder": "src",
+    "sourceFile": "index.js",
+    "testFolder": "test",
+    "examplesFolder": "examples",
+    "outputFolder": "./dist",
+    "outputBaseFilename": "moyal.error", // TODO: replace with library name
+    "outputExposedName": "MoyalError", // TODO: replace with exposed library name (for UDM - don't include dot in name). For example: moyalTest, moyalLinq etc.
+    "exampleExportedName": "MoyalError", // TOTO: Replace with export
+    "devDependencies": {
+        "@eslint/js": "^9.25.0",
+        "@rollup/plugin-terser": "^0.4.3",
+        "chokidar": "^4.0.3",
+        "comment-json": "^4.2.5",
+        "eslint": "^9.25.0",
+        "globals": "^16.0.0",
+        "jsdoc": "^4.0.4",
+        "jsdoc-to-markdown": "^9.1.1",
+        "rollup": "^3.0.0",
+        "docdash": "^2.0.2",
+        "@moyal/js-test": "^2.1.8"
+    },
+    "git:repository-name": "moyal.js.error", // TODO: replace lib_name with library name
+    "git:username": "IlanMoyal",
+    "keywords": [
+        // TODO: Add keyword list
+    ]
+}
