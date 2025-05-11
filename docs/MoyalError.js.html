@@ -110,7 +110,7 @@ export class MoyalError extends Error {
 	 */
 	constructor(message = "No message description was set to this error.", second = null) {
 		// Handle options object with { cause } explicitly
-        const isOptionsObject = second &amp;&amp; typeof second === 'object' &amp;&amp; 'cause' in second;
+        const isOptionsObject = second &amp;&amp; !(second instanceof Error) &amp;&amp; typeof second === 'object' &amp;&amp; 'cause' in second;
         const cause = isOptionsObject ? second.cause : second;
         const restOptions = MoyalError.#_supportsNativeCause ? { cause } : undefined;
 		

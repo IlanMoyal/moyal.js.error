@@ -1,7 +1,7 @@
 {
   "x-moyal-auto-generated-comment": "THIS IS AN AUTO_GENERATED FILE. DON'T EDIT IT! INSTEAD EDIT build/package.template.jsonc and project.settings.jsonc",
   "name": "@moyal/js-error",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A modern, extensible JavaScript error class with native cause support, recursive serialization, full stack tracing, and developer-friendly utilities. Designed for structured logging and forward-compatible error handling in modern applications.",
   "type": "module",
   "main": "./dist/moyal.error.cjs.js",

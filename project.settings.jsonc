@@ -4,7 +4,7 @@
     "project:fullname": "moyal.js.error", // TODO: replace `lib_name` with library name
     "scope": "@moyal",
     "lib": "js-error", // TODO: replace `lib_name` with library name
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A modern, extensible JavaScript error class with native cause support, recursive serialization, full stack tracing, and developer-friendly utilities. Designed for structured logging and forward-compatible error handling in modern applications.",
     "author": "Ilan Moyal",
     "author:website": "https://www.moyal.es",
