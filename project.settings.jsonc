@@ -3,9 +3,10 @@
  */{
     "project:fullname": "moyal.js.error", // TODO: replace `lib_name` with library name
     "scope": "@moyal",
-    "lib": "js-error", // TODO: replace `lib_name` with library name
-    "version": "1.0.1",
+    "lib": "js-error", 
+    "version": "1.0.2",
     "description": "A modern, extensible JavaScript error class with native cause support, recursive serialization, full stack tracing, and developer-friendly utilities. Designed for structured logging and forward-compatible error handling in modern applications.",
+    "sideEffects": false, // TODO: Set to `true` if the library causes any global side effects when imported.
     "author": "Ilan Moyal",
     "author:website": "https://www.moyal.es",
     "author:twitter:username": "i_moyal",
@@ -20,9 +21,12 @@
     "outputBaseFilename": "moyal.error", // TODO: replace with library name
     "outputExposedName": "MoyalError", // TODO: replace with exposed library name (for UDM - don't include dot in name). For example: moyalTest, moyalLinq etc.
     "exampleExportedName": "MoyalError", // TOTO: Replace with export
+    "dependencies": { "@moyal/js-type": "^1.0.3" },
     "devDependencies": {
         "@eslint/js": "^9.25.0",
         "@rollup/plugin-terser": "^0.4.3",
+        "@rollup/plugin-commonjs": "^28.0.3",
+        "@rollup/plugin-node-resolve": "^16.0.1",
         "chokidar": "^4.0.3",
         "comment-json": "^4.2.5",
         "eslint": "^9.25.0",
@@ -31,7 +35,8 @@
         "jsdoc-to-markdown": "^9.1.1",
         "rollup": "^3.0.0",
         "docdash": "^2.0.2",
-        "@moyal/js-test": "^2.1.8"
+        "@moyal/js-test": "^2.1.8",
+        "typescript": "^5.8.3"
     },
     "git:repository-name": "moyal.js.error", // TODO: replace lib_name with library name
     "git:username": "IlanMoyal",

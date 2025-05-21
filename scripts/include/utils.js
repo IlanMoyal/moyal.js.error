@@ -118,6 +118,19 @@ export default class utils {
 		}
 	}
 
+	/**
+	 * Checks if the Git repository has at least one commit.
+	 * @returns {boolean} `true` if the repository has at least one commit, otherwise `false`.
+	 */
+	static gitHasCommits() {
+		try {
+			execSync("git rev-parse --verify HEAD", { stdio: "ignore" });
+			return true;
+		} catch {
+			return false;
+		}
+	}
+
 	static gitTagExists(tag) {
 		try {
 			const output = execSync(`git tag -l "${tag}"`).toString().trim();
@@ -244,6 +257,38 @@ export default class utils {
 			process.exit(1);
 		} else {
 			console.log(`✅ Running from the project root: ${resolvedRoot}`);
+		}
+	}
+
+	/**
+	 * Replaces a file extension or a specific string suffix with a new value.
+	 *
+	 * @param {string} filePath - The original file path or name.
+	 * @param {string} matchEnding - The string to match at the end (e.g., '.js').
+	 * @param {string} replacement - The string to replace it with (e.g., '.d.ts').
+	 * @returns {string} - The updated file path.
+	 */
+	static replaceEnding(filePath, matchEnding, replacement) {
+		if (filePath.endsWith(matchEnding)) {
+			return filePath.slice(0, -matchEnding.length) + replacement;
+		}
+		return filePath;
+	}
+
+	/**
+	 * Renames a file.
+	 *
+	 * @param {string} oldPath - The current path of the file.
+	 * @param {string} newPath - The new desired path.
+	 * @returns {Promise<void>}
+	 */
+	static renameFile(oldPath, newPath) {
+		try {
+			fs.renameSync(oldPath, newPath);
+			console.log(`Renamed: ${oldPath} → ${newPath}`);
+		} catch (err) {
+			console.error(`Failed to rename ${oldPath}:`, err);
+			throw err;
 		}
 	}
 }

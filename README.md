@@ -10,7 +10,7 @@
 A modern, extensible JavaScript error class with native cause support, recursive serialization, full stack tracing, and developer-friendly utilities. Designed for structured logging and forward-compatible error handling in modern applications.
 
 ## Information
-- **Current Version:** 1.0.1
+- **Current Version:** 1.0.2
 - **Author:** Ilan Moyal
 - **Website:** https://www.moyal.es
 - **License:** MIT
@@ -52,12 +52,12 @@ const { MoyalError } = require("@moyal/js-error");
 ```html
 <!-- From jsDelivr CDN (minified version) -->
 <script type="module">
-  import "https://cdn.jsdelivr.net/npm/@moyal/js-error@1.0.1/dist/moyal.error.umd.min.js";
+  import "https://cdn.jsdelivr.net/npm/@moyal/js-error@1.0.2/dist/moyal.error.umd.min.js";
 </script>
 
 <!-- From jsDelivr CDN (non minified version with documentation) -->
 <script type="module">
-  import "https://cdn.jsdelivr.net/npm/@moyal/js-error@1.0.1/dist/moyal.error.umd.js";
+  import "https://cdn.jsdelivr.net/npm/@moyal/js-error@1.0.2/dist/moyal.error.umd.js";
 </script>
 ```
 
@@ -66,7 +66,7 @@ Or using **unpkg**:
 
 ```html
 <script type="module">
-  import "https://unpkg.com/@moyal/js-error@1.0.1/dist/moyal.error.umd.min.js";
+  import "https://unpkg.com/@moyal/js-error@1.0.2/dist/moyal.error.umd.min.js";
 </script>
 ```
 
@@ -163,7 +163,7 @@ Access the library version directly:
 ```js
 import * as myLib from "@moyal/js-error";
 
-myLib.Version // → e.g., "1.0.1"
+myLib.Version // → e.g., "1.0.2"
 ```
 
 ## License

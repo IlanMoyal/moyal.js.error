@@ -2,12 +2,14 @@
  * File: rollup.config.js 
  */
 
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
-import settingsAccessor from "./scripts/include/settings-accessor.js";
-const __projectSettings = settingsAccessor.projectSettings;
+import SettingsAccessor from "./scripts/include/settings-accessor.js";
+const __projectSettings = SettingsAccessor.projectSettings;
 
 const __terserBanner = `/*!
- * ${__projectSettings.scope}/${__projectSettings.lib} v${settingsAccessor.package.version}
+ * ${__projectSettings.scope}/${__projectSettings.lib} v${SettingsAccessor.package.version}
  * (c) 2000–present Ilan Moyal
  * Released under the ${__projectSettings.license} License
  */`;
@@ -19,14 +21,19 @@ const __terserBanner = `/*!
 	}
 });
 
+const __externalLibs = [
+  ...Object.keys(__projectSettings.dependencies ?? {}),
+  ...Object.keys(__projectSettings.peerDependencies ?? {})
+];
+
 const __outputFormats = {
 	/* UMD - For regular script tag */
 	"umd": [{
 		"extension": "umd.js", 
-		"plugins": []
+		"plugins": [resolve(), commonjs()]
 	}, {
 		"extension": "umd.min.js", 
-		"plugins": [__minifyingTerser]
+		"plugins": [resolve(), commonjs(), __minifyingTerser]
 	}],
 	/* ESM - For module style */
 	"es": [{
@@ -49,9 +56,9 @@ const __outputFormats = {
 const output = [];
 
 const sourceFile = `${(__projectSettings.sourceFolder ?? "src")}/${(__projectSettings.sourceFile ?? "index.js")}`;
-const outputFolder = settingsAccessor.projectSettings.outputFolder ?? "./dist";
-const baseFilename = settingsAccessor.projectSettings.outputBaseFilename;
-const exposedName = settingsAccessor.projectSettings.outputExposedName;
+const outputFolder = SettingsAccessor.projectSettings.outputFolder ?? "./dist";
+const baseFilename = SettingsAccessor.projectSettings.outputBaseFilename;
+const exposedName = SettingsAccessor.projectSettings.outputExposedName;
 
 for (const [format, outputVariations] of Object.entries(__outputFormats)) {
 	for (const variation of outputVariations) {
@@ -68,6 +75,9 @@ for (const [format, outputVariations] of Object.entries(__outputFormats)) {
 		
 		if (format === "umd") {
 			config.output.name = exposedName;
+		}
+		else {
+			config.external = __externalLibs;
 		}
 
 		output.push(config);

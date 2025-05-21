@@ -6,6 +6,7 @@
 
 set -e
 
+# "comment-json" package is required by initialization scripts
 npm install comment-json
 
 # Get the directory of this script

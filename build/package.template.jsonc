@@ -11,6 +11,8 @@
 	"version": "{{version}}",
 	"description": "{{description}}",
 	"type": "module",
+	"types": "{{outputFolder}}/types/{{outputBaseFilename}}.d.ts",
+	"sideEffects": "::placeholder::", 
 	"main": "{{outputFolder}}/{{outputBaseFilename}}.cjs.js",
 	"module": "{{outputFolder}}/{{outputBaseFilename}}.mjs",
 	"browser": "{{outputFolder}}/{{outputBaseFilename}}.umd.js",
@@ -22,7 +24,9 @@
 	"license": "{{license}}",
 	"scripts": {
 		/* utils*/
-		"validate:clean": "node ./scripts/validate-clean.js",
+		"types": "node ./scripts/generate-ts.js",
+		"validate:has-commits": "node ./scripts/validate-has-commits.js", /* Validates that the git has any commits so far and it is not a clean new project with no commits so far */
+		"validate:clean": "node ./scripts/validate-clean.js", /* validates that there are no uncommited changes (internally it includes the logic of validate:has-commits) */
 
 		/* synchronizing */
 		"sync:package": "node ./scripts/sync-package.js", /* synchronize the content of package.json with the merged content of this template and project.settings.js */
@@ -65,10 +69,10 @@
 		
 		"clean": "node ./scripts/clean.js",
 		"prebuild": "npm run sync && npm run check", /* update package.json from project.settings.jsonc before building */
-		"build": "npm run clean && node ./scripts/build.js",
+		"build": "npm run clean && npm run types && node ./scripts/build.js",
 
 		/* packing */
-		"prepack": "npm run build && npm run docs", /* build before pack */
+		"prepack": "npm run validate:clean && npm run build && npm run docs", /* build before pack */
 		"pack:local": "npm run publish:switch && bash ./scripts/pack-local.sh && node ./scripts/publish-switch.js restore", 
 		"pack:preview": "bash ./scripts/pack-preview.sh",
 		"pack": "npm run pack:local && npm run pack:preview",
@@ -80,6 +84,7 @@
 		"publish:npm": "npm run validate:logged-in && npm run publish:switch && npm publish --access public && node ./scripts/publish-switch.js restore", // publish the library to NPM
 		"release": "npm run validate:logged-in && npm run build && npm run version:release && npm run publish:npm" // increments the patch and release it to GitHub (adding tag) and NPM.
 	},
+	"dependencies": "::placeholder::", 
 	"devDependencies": "::placeholder::", /* dependencies required only during development */
 	/* output packed files - what goes into the final tarball during npm pack */
 	"files": [

@@ -3,7 +3,7 @@
  */
 
 import { TestGroup } from "@moyal/js-test";
-import { MoyalError } from "../../src/index.js";
+import { MoyalError, printCauseChain } from "../../src/index.js";
 import BuildInfo from "../../src/auto-generated/build-info.js";
 
 export default new TestGroup("MoyalError initialization and behavior")
@@ -82,7 +82,7 @@ export default new TestGroup("MoyalError initialization and behavior")
 				cause: new Error("Root")
 			})
 		});
-		const chain = MoyalError.printCauseChain(err);
+		const chain = printCauseChain(err);
 		if (
 			typeof chain !== "string" ||
 			!chain.includes("Outer") ||

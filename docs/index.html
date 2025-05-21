@@ -29,7 +29,7 @@
 <nav >
     
     
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="MoyalError.html">MoyalError</a><ul class='methods'><li data-type='method'><a href="MoyalError.html#toJSON">toJSON</a></li><li data-type='method'><a href="MoyalError.html#toString">toString</a></li><li data-type='method'><a href="MoyalError.html#.extendNativeError">extendNativeError</a></li><li data-type='method'><a href="MoyalError.html#.printCauseChain">printCauseChain</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#MoyalError.">MoyalError.</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ArgumentError.html">ArgumentError</a><ul class='methods'><li data-type='method'><a href="ArgumentError.html#toJSON">toJSON</a></li><li data-type='method'><a href="ArgumentError.html#toString">toString</a></li></ul></li><li><a href="MoyalError.html">MoyalError</a><ul class='methods'><li data-type='method'><a href="MoyalError.html#toJSON">toJSON</a></li><li data-type='method'><a href="MoyalError.html#toString">toString</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#MoyalError.">MoyalError.</a></li><li><a href="global.html#extendNativeError">extendNativeError</a></li><li><a href="global.html#printCauseChain">printCauseChain</a></li><li><a href="global.html#throwIfEmptyString">throwIfEmptyString</a></li><li><a href="global.html#throwIfNull">throwIfNull</a></li><li><a href="global.html#throwIfNullOrUndefined">throwIfNullOrUndefined</a></li><li><a href="global.html#throwIfNullOrWhitespace">throwIfNullOrWhitespace</a></li><li><a href="global.html#throwIfUndefined">throwIfUndefined</a></li><li><a href="global.html#throwMissingArgument">throwMissingArgument</a></li><li><a href="global.html#version">version</a></li></ul>
     
 </nav>
 
@@ -69,7 +69,7 @@
 <p>A modern, extensible JavaScript error class with native cause support, recursive serialization, full stack tracing, and developer-friendly utilities. Designed for structured logging and forward-compatible error handling in modern applications.</p>
 <h2>Information</h2>
 <ul>
-<li><strong>Current Version:</strong> 1.0.1</li>
+<li><strong>Current Version:</strong> 1.0.2</li>
 <li><strong>Author:</strong> Ilan Moyal</li>
 <li><strong>Website:</strong> https://www.moyal.es</li>
 <li><strong>License:</strong> MIT</li>
@@ -103,18 +103,18 @@
 <h3>In the Browser (ES Module via CDN)</h3>
 <pre class="prettyprint source lang-html"><code>&lt;!-- From jsDelivr CDN (minified version) -->
 &lt;script type=&quot;module&quot;>
-  import &quot;https://cdn.jsdelivr.net/npm/@moyal/js-error@1.0.1/dist/moyal.error.umd.min.js&quot;;
+  import &quot;https://cdn.jsdelivr.net/npm/@moyal/js-error@1.0.2/dist/moyal.error.umd.min.js&quot;;
 &lt;/script>
 
 &lt;!-- From jsDelivr CDN (non minified version with documentation) -->
 &lt;script type=&quot;module&quot;>
-  import &quot;https://cdn.jsdelivr.net/npm/@moyal/js-error@1.0.1/dist/moyal.error.umd.js&quot;;
+  import &quot;https://cdn.jsdelivr.net/npm/@moyal/js-error@1.0.2/dist/moyal.error.umd.js&quot;;
 &lt;/script>
 </code></pre>
 <!-- CONTENT -->
 <p>Or using <strong>unpkg</strong>:</p>
 <pre class="prettyprint source lang-html"><code>&lt;script type=&quot;module&quot;>
-  import &quot;https://unpkg.com/@moyal/js-error@1.0.1/dist/moyal.error.umd.min.js&quot;;
+  import &quot;https://unpkg.com/@moyal/js-error@1.0.2/dist/moyal.error.umd.min.js&quot;;
 &lt;/script>
 </code></pre>
 <h2>Features</h2>
@@ -235,7 +235,7 @@ Note: If we don't call MoyalError.extendNativeError(), the inner error (cause) w
 <p>Access the library version directly:</p>
 <pre class="prettyprint source lang-js"><code>import * as myLib from &quot;@moyal/js-error&quot;;
 
-myLib.Version // → e.g., &quot;1.0.1&quot;
+myLib.Version // → e.g., &quot;1.0.2&quot;
 </code></pre>
 <h2>License</h2>
 <p>MIT License - free to use, modify, and distribute.</p>

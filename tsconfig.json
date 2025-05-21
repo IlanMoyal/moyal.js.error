@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist/types",
+    "rootDir": "src",
+    "module": "ESNext",
+    "target": "ES2020",
+    "moduleResolution": "Node",
+    "strict": true,
+    "esModuleInterop": true,
+    "stripInternal": true
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "src/auto-generated"
+  ]
+}

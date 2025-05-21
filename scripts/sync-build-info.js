@@ -16,9 +16,11 @@ function syncBuildInfo() {
 `/**
 * @module
 * @ignore
+* @internal
 */
 /**
 * @ignore
+* @internal
 */
 export default class BuildInfo {
     static version = "${settingsAccessor.projectSettings.version}";
